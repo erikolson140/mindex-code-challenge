@@ -50,7 +50,8 @@ public class EmployeeController {
         return employeeService.update(employee);
     }
 
-    @GetMapping("/employee/reportingStructure/{id}")
+
+    @GetMapping("/employee/{id}/reportingStructure")
     public ReportingStructure getReportingStructure(@PathVariable String id) {
         LOG.debug("Received employee reporting structure create request for id [{}]", id);
 

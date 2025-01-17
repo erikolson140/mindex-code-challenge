@@ -17,6 +17,7 @@ public class CompensationController {
     @Autowired
     private CompensationService compensationService;
 
+    // requestbody requires employeeId, salary as BigDecimal, and effectiveDate as Date type in yyyy-mm-dd format
     @PostMapping("/compensation")
     public Compensation create(@RequestBody Compensation compensation) {
         LOG.debug("Received compensation create request for [{}]", compensation);
@@ -24,6 +25,7 @@ public class CompensationController {
         return compensationService.create(compensation);
     }
 
+    // takes in employee id to return compensation
     @GetMapping("/compensation/{id}")
     public Compensation create(@PathVariable String id) {
         LOG.debug("Received compensation create request for id [{}]", id);
