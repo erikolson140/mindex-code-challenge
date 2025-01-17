@@ -3,6 +3,7 @@ package com.mindex.challenge.service.impl;
 import com.mindex.challenge.dao.EmployeeRepository;
 import com.mindex.challenge.data.Employee;
 import com.mindex.challenge.service.EmployeeService;
+import com.mindex.challenge.validator.EmployeeValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private static final Logger LOG = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
+    private final EmployeeRepository employeeRepository;
+    private final EmployeeValidator employeeValidator;
+
     @Autowired
-    private EmployeeRepository employeeRepository;
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository,
+                               EmployeeValidator employeeValidator) {
+        this.employeeValidator = employeeValidator;
+        this.employeeRepository = employeeRepository;
+    }
 
     @Override
     public Employee create(Employee employee) {
@@ -31,6 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee read(String id) {
         LOG.debug("Creating employee with id [{}]", id);
 
+        employeeValidator.validateEmployeeId(id);
         Employee employee = employeeRepository.findByEmployeeId(id);
 
         if (employee == null) {
